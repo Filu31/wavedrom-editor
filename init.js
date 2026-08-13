@@ -46,7 +46,7 @@
         // node-webkit detection
         val = localStorage.waveform;
         if (val === undefined || val === '' || val === null) {
-            val = '{signal: [\n  {name: \'clk\', wave: \'p.....|...\'},\n  {name: \'dat\', wave: \'x.345x|=.x\', data: [\'head\', \'body\', \'tail\', \'data\']},\n  {name: \'req\', wave: \'0.1..0|1.0\'},\n  {},\n  {name: \'ack\', wave: \'1.....|01.\'}\n],\n  usersvg: [\n    ['tspan', {x:100, y:140, 'font-size': '10', fill:'green', 'stroke-width':0.2, }, 'USERSVG'],\n]}\n';
+            val = '{signal: [\n  {name: \'clk\', wave: \'p.....|...\'},\n  {name: \'dat\', wave: \'x.345x|=.x\', data: [\'head\', \'body\', \'tail\', \'data\']},\n  {name: \'req\', wave: \'0.1..0|1.0\'},\n  {},\n  {name: \'ack\', wave: \'1.....|01.\'}\n],\n  usersvg: [\n	[\'tspan\', {x:100, y:140, \'font-size\': \'10\', stroke:\'blue\', fill:\'blue\', \'stroke-width\':0.2, }, \'With USERSVG\'],\n]}';            
             localStorage.waveform = val;
         }
 
