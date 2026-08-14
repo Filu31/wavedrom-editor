@@ -2,23 +2,17 @@
 
 # WaveDrom editor
 
-[WaveDromEditor](http://wavedrom.com/editor.html) is real-time editor of digital timing diagrams based on [WaveDrom](https://github.com/wavedrom/wavedrom) engine and [WaveJSON](https://github.com/wavedrom/schema/blob/master/WaveJSON.md) format.
+[WaveDromEditor](http://filu31.github.io/wavedrom-editor/editor.html) is real-time editor of digital timing diagrams based on [WaveDrom](https://github.com/wavedrom/wavedrom) engine and [WaveJSON](https://github.com/wavedrom/schema/blob/master/WaveJSON.md) format.
 
-See [Tutorial](http://wavedrom.com/tutorial.html) for more examples.
+See [Tutorial](http://filu31.github.io/wavedrom-editor/tutorial.html) for more examples.
 
-[Online editor](http://wavedrom.com/editor.html)
+[Online editor](http://filu31.github.io/wavedrom-editor/editor.html)
 
 ![alt text](images/firefox_22.gif "firefox") 4+
 ![alt text](images/chrome_22.gif "chrome") 10+
 ![alt text](images/safari_22.gif "safari") 5.1+
 ![alt text](images/opera_22.gif "opera") 12+
 ![alt text](images/ie_22.gif "ie") 11+
-
-[Download editor](https://github.com/wavedrom/wavedrom.github.io/releases)  (Windows, Mac, Linux)
-
-## Builds
-
-[![Build Status](https://travis-ci.org/wavedrom/wavedrom.github.io.svg?branch=master)](https://travis-ci.org/wavedrom/wavedrom.github.io)
 
 ## How to Build Desktop Application
 
