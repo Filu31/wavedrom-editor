@@ -72,9 +72,9 @@ jobs:
           git push origin HEAD:Dev
 
       - name: Upload site files for GitHub Pages
-        uses: actions/upload-pages-artifact@v1
+        uses: actions/upload-pages-artifact@v3
         with:
           path: ./${{ env.PAGES_SUBDIR }}
 
       - name: Deploy to GitHub Pages
-        uses: actions/deploy-pages@v1
+        uses: actions/deploy-pages@v4
