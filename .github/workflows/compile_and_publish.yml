@@ -1,0 +1,80 @@
+name: Build WaveDrom and sync to editor
+
+on:
+  push:
+    branches: [ "Dev" ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  build-and-sync:
+    runs-on: ubuntu-latest
+    env:
+      WAVEDROM_REPO: Filu31/wavedrom
+      WAVEDROM_REF: Dev
+      PAGES_SUBDIR: public          # files placed here will be deployed to GitHub Pages
+      DIST_DIR: wavedrom-dist       # where built files are copied inside the wavedrom-editor workspace
+
+    steps:
+      - name: Checkout wavedrom-editor (current repo)
+        uses: actions/checkout@v4
+        with:
+          ref: Dev
+
+      - name: Checkout WaveDrom repository
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ env.WAVEDROM_REPO }}
+          path: wavedrom
+          ref: ${{ env.WAVEDROM_REF }}
+
+      - name: Setup Node.js (for building)
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: 'npm'
+
+      - name: Build WaveDrom bundles
+        working-directory: ./wavedrom
+        run: |
+          npm ci
+          npm run dist
+          npm run dist.min
+          npm run unpkg
+          npm run unpkg.min
+
+      - name: Copy bundles into wavedrom-editor workspace
+        run: |
+          # copy two bundles into Pages deploy folder (adjust path if you use a different pages source)
+          mkdir -p ./${{ env.PAGES_SUBDIR }}/assets
+          cp ./wavedrom/wavedrom.js ./${{ env.PAGES_SUBDIR }}/assets/ || true
+          cp ./wavedrom/wavedrom.min.js ./${{ env.PAGES_SUBDIR }}/assets/ || true
+
+      - name: Upload built bundles as workflow artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: wavedrom-build
+          path: ./${{ env.DIST_DIR }}
+
+      # Optional: commit the built files back into the Dev branch (disabled by default)
+      # To enable, change `if: false` to `if: github.event_name == 'push'` or remove the if entirely.
+      - name: Commit and push built bundles to Dev (optional)
+        if: false
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add ./${{ env.DIST_DIR }} ./${{ env.PAGES_SUBDIR }}/assets
+          git commit -m "chore(ci): add WaveDrom built bundles from ${WAVEDROM_REF}" || echo "no changes to commit"
+          git push origin HEAD:Dev
+
+      - name: Upload site files for GitHub Pages
+        uses: actions/upload-pages-artifact@v1
+        with:
+          path: ./${{ env.PAGES_SUBDIR }}
+
+      - name: Deploy to GitHub Pages
+        uses: actions/deploy-pages@v1
